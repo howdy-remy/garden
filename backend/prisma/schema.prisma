@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  password String
+  plants PlantToUser[]
+}
+
+model Plant {
+  id              Int     @id @default(autoincrement())
+  name	          String
+  variety         String?
+  scientificName  String?
+  type            Type[]
+  lifecycle	      Lifecycle[]
+  sunExposure	    SunExposure[]
+  soilPh	        SoilPh[]
+  bloomSeason	    Season[]
+  daysToMaturity	String?
+  yield	          String?
+  sowMethod	      String?
+  plantingNotes	  String?
+  spacing	        String?
+  height	        String?
+  spread	        String?
+  fruitSize	      String?
+  hardinessZones  Int[]
+  users           PlantToUser[]
+}
+
+model PlantToUser {
+  id      Int  @id @default(autoincrement())
+  plant   Plant @relation(fields: [plantId], references: [id])
+  plantId Int
+  user    User @relation(fields: [userId], references: [id])
+  userId  Int
+}
+
+enum Lifecycle {
+  ANNUAL
+  PERENNIAL
+  BIANNUAL
+}
+
+enum Season {
+  WINTER
+  SPRING
+  SUMMER
+  FALL
+}
+
+enum SoilPh {
+SLIGHTLY_ALKALINE
+SLIGHTLY_ACIDIC
+NEUTRAL
+}
+
+enum SunExposure {
+  FULL
+  PARTIAL
+  SHADE
+}
+
+enum Type {
+VEGETABLE
+FRUIT
+HERBS
+ANNUAL
+PERENNIAL
+}
