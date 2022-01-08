@@ -1,12 +1,14 @@
 import React from 'react';
-import Table from './features/PlantList';
+import { Outlet } from 'react-router-dom';
+
+import Page from './common/Page';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Table />
-      </header>
+      <Page>
+        <Outlet />
+      </Page>
     </div>
   );
 }

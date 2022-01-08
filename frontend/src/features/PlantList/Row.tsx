@@ -13,7 +13,7 @@ import {
 import exposureToIcon from './SunExposureIcon';
 import { TPlant } from './constants';
 
-function Row({ plant, columns }: { plant: TPlant; columns: { key: string; display: string; leftPos?: number } }) {
+function Row({ plant, columns }: { plant: TPlant; columns: { key: string; display: string; leftPos?: number }[] }) {
   const { name, id } = plant;
   const makeReactKey = (col: string, key?: string) => `${name}_${id}_${col}_${key}`;
   const exposure = plant.sunExposure?.join('_');

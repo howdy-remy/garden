@@ -29,18 +29,16 @@ function Table() {
   const { data } = useQuery(PLANTS);
 
   return (
-    <Page>
-      <TableContainer>
-        {!!data && (
-          <>
-            <Header columns={columns} />
-            {data.AllPlants.map((plant: TPlant) => (
-              <Row plant={plant} columns={columns} key={plant.id} />
-            ))}
-          </>
-        )}
-      </TableContainer>
-    </Page>
+    <TableContainer>
+      {!!data && (
+        <>
+          <Header columns={columns} />
+          {data.AllPlants.map((plant: TPlant) => (
+            <Row plant={plant} columns={columns} key={plant.id} />
+          ))}
+        </>
+      )}
+    </TableContainer>
   );
 }
 

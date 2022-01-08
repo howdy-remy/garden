@@ -7,7 +7,7 @@
     "outDir": "app",
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.tsx?",
     "**/*.d.ts"
   ],
   "exclude": [
