@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { Resolvers } from "./generated/graphql";
 
 export const resolvers = {
@@ -6,5 +7,17 @@ export const resolvers = {
   },
   Mutation: {
     AddPlant: async (_, args, context) => {},
+    Login: async (source, {email, issuer}, { prisma }) => {
+        const user: User = prisma.user.upsert({
+          where: {email: email},
+          update: {issuer: issuer},
+          create: {
+            email: email, issuer: issuer
+          }
+
+        })
+        return user;
+
+    }
   },
 }

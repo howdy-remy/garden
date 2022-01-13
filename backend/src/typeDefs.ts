@@ -5,6 +5,8 @@ export const typeDefs = gql`
     id:       Int!
     name:     String
     password: String
+    email:    String
+    issuer:   String
   }
 
   type Plant {
@@ -75,5 +77,6 @@ export const typeDefs = gql`
 
   type Mutation {
     AddPlant(body: String!): Plant!
+    Login(email: String!, issuer: String!): User!
   }
 `

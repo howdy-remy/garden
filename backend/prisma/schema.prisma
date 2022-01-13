@@ -11,39 +11,39 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  password String
+  id     Int           @id @default(autoincrement())
+  email  String        @unique
+  issuer String        @unique
   plants PlantToUser[]
 }
 
 model Plant {
-  id              Int     @id @default(autoincrement())
-  name	          String
-  variety         String?
-  scientificName  String?
-  type            Type[]
-  lifecycle	      Lifecycle[]
-  sunExposure	    SunExposure[]
-  soilPh	        SoilPh[]
-  bloomSeason	    Season[]
-  daysToMaturity	String?
-  yield	          String?
-  sowMethod	      String?
-  plantingNotes	  String?
-  spacing	        String?
-  height	        String?
-  spread	        String?
-  fruitSize	      String?
-  hardinessZones  Int[]
-  users           PlantToUser[]
+  id             Int           @id @default(autoincrement())
+  name           String
+  variety        String?
+  scientificName String?
+  type           Type[]
+  lifecycle      Lifecycle[]
+  sunExposure    SunExposure[]
+  soilPh         SoilPh[]
+  bloomSeason    Season[]
+  daysToMaturity String?
+  yield          String?
+  sowMethod      String?
+  plantingNotes  String?
+  spacing        String?
+  height         String?
+  spread         String?
+  fruitSize      String?
+  hardinessZones Int[]
+  users          PlantToUser[]
 }
 
 model PlantToUser {
-  id      Int  @id @default(autoincrement())
+  id      Int   @id @default(autoincrement())
   plant   Plant @relation(fields: [plantId], references: [id])
   plantId Int
-  user    User @relation(fields: [userId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
   userId  Int
 }
 
@@ -61,9 +61,9 @@ enum Season {
 }
 
 enum SoilPh {
-SLIGHTLY_ALKALINE
-SLIGHTLY_ACIDIC
-NEUTRAL
+  SLIGHTLY_ALKALINE
+  SLIGHTLY_ACIDIC
+  NEUTRAL
 }
 
 enum SunExposure {
@@ -73,9 +73,9 @@ enum SunExposure {
 }
 
 enum Type {
-VEGETABLE
-FRUIT
-HERBS
-ANNUAL
-PERENNIAL
+  VEGETABLE
+  FRUIT
+  HERBS
+  ANNUAL
+  PERENNIAL
 }
