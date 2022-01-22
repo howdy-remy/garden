@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { PageContainer, PageNav } from './Page.styles';
+import { ContentContainer, PageContainer, PageNav } from './Page.styles';
 import Link from './Link';
 
 function Page({ children }: { children: ReactNode }) {
@@ -8,14 +8,14 @@ function Page({ children }: { children: ReactNode }) {
       <div>
         Garden
         <PageNav>
-          <Link to="plant-list">plant list</Link>
-          <Link to="timing">timing</Link>
-          <Link to="companions">companions</Link>
-          <Link to="all-plants">all plants</Link>
-          <Link to="settings">settings</Link>
+          <Link to="pantry">pantry</Link>
+          <Link to="garden-beds">garden beds</Link>
+          <Link to="calendar">calendar</Link>
+          <Link to="seed-catalog">seed catalog</Link>
+          <Link to="account">account</Link>
         </PageNav>
       </div>
-      {children}
+      <ContentContainer>{children}</ContentContainer>
     </PageContainer>
   );
 }

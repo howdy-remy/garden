@@ -2,20 +2,16 @@
 const colors = {
   white: '#fff',
   black: '#000',
-  primary100: '#EDF8EF',
-  primary300: '#DBF1DE',
-  primary700: '#48654B',
-  accentBlue: '#2F4348',
-  accentYellow: '#FBB34F',
-  accentPurple: '#571B43',
-  background: '#f1f4f1',
-
-  springFg: '#757742',
-  springBg: '#F5F5F1',
-  summerFg: '#48654B',
-  summerBg: '#EFF9F0',
-  fallFg: '#A3251B',
-  fallBg: '#FEF4E5',
+  primary100: '#F1F3F2',
+  primary300: '#E2E4E2',
+  primary900: '#124135',
+  accent100: '#F4F6F1',
+  accent400: '#BCCDB4',
+  accent700: '#4E6B46',
+  accent800: '#425B39',
+  contrastTan: '#E9D7AF',
+  contrastYellow: '#F9A424',
+  contrastOrange: '#FD6A3B',
 };
 
 const phColors = {

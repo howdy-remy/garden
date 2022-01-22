@@ -8,28 +8,37 @@ export const RecoletaHeader = styled(BaseParagraph)`
   font-family: ${({ theme }) => theme.recoletaBold};
   font-size: ${({ theme }) => theme.extraLarge};
   line-height: 1;
-  color: ${({ theme }) => theme.accentBlue};
 `;
 
 export const RecoletaLargeText = styled(BaseParagraph)`
   font-family: ${({ theme }) => theme.recoletaBold};
   font-size: ${({ theme }) => theme.large};
   line-height: 1.2;
-  color: ${({ theme }) => theme.accentBlue};
 `;
 
 export const RecoletaText = styled(BaseParagraph)`
   font-family: ${({ theme }) => theme.recoletaBold};
   font-size: ${({ theme }) => theme.normal};
   line-height: 1.2;
-  color: ${({ theme }) => theme.accentBlue};
+`;
+
+export const GilroyHeader = styled(BaseParagraph)<{ withSpaceAfter?: boolean }>`
+  font-family: ${({ theme }) => theme.gilroyExtraBold};
+  font-size: ${({ theme }) => theme.extraLarge};
+  line-height: 1.4;
+  ${({ withSpaceAfter }) => withSpaceAfter && 'margin-bottom: 30px'}
+`;
+
+export const GilroyLargeText = styled(BaseParagraph)`
+  font-family: ${({ theme }) => theme.gilroyExtraBold};
+  font-size: ${({ theme }) => theme.large};
+  line-height: 1.4;
 `;
 
 export const GilroyText = styled(BaseParagraph)`
   font-family: ${({ theme }) => theme.gilroyExtraBold};
   font-size: ${({ theme }) => theme.normal};
   line-height: 1.4;
-  color: ${({ theme }) => theme.accentBlue};
 `;
 
 export const GilroySmallText = styled(BaseParagraph)`
@@ -38,5 +47,4 @@ export const GilroySmallText = styled(BaseParagraph)`
   line-height: 1.4;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.accentBlue};
 `;

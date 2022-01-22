@@ -1,10 +1,13 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import Page from '../../common/Page';
+
+import { GilroyHeader } from '../../common/typography.styles';
+
+import { columns, TPlant } from './constants';
 import { TableContainer } from './index.styles';
 import Row from './Row';
 import Header from './Header';
-import { columns, TPlant } from './constants';
+import Filters from './Filters';
 
 function Table() {
   const PLANTS = gql`
@@ -29,16 +32,20 @@ function Table() {
   const { data } = useQuery(PLANTS);
 
   return (
-    <TableContainer>
-      {!!data && (
-        <>
-          <Header columns={columns} />
-          {data.AllPlants.map((plant: TPlant) => (
-            <Row plant={plant} columns={columns} key={plant.id} />
-          ))}
-        </>
-      )}
-    </TableContainer>
+    <>
+      <GilroyHeader withSpaceAfter>Seed Catalog</GilroyHeader>
+      <Filters />
+      <TableContainer>
+        {!!data && (
+          <>
+            <Header columns={columns} />
+            {data.AllPlants.map((plant: TPlant) => (
+              <Row plant={plant} columns={columns} key={plant.id} />
+            ))}
+          </>
+        )}
+      </TableContainer>
+    </>
   );
 }
 

@@ -11,12 +11,14 @@ export const Container = styled.div`
   min-width: max-content;
   width: 100%;
   height: 30px;
+  background-color: ${({ theme }) => theme.contrastTan};
 `;
 
 export const Cell = styled.div<{ key: string; leftPos?: number; children: ReactNode }>`
   display: grid;
   align-items: center;
-  background-color: ${({ theme }) => theme.primary100};
+  background-color: ${({ theme }) => theme.contrastTan};
+  color: ${({ theme }) => theme.accent700};
   height: 30px;
   padding: 0 16px;
 
