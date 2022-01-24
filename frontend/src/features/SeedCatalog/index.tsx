@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 import { GilroyHeader } from '../../common/typography.styles';
 
@@ -8,6 +8,7 @@ import { TableContainer } from './index.styles';
 import Row from './Row';
 import Header from './Header';
 import Filters from './Filters';
+import magic from '../../common/magic';
 
 function Table() {
   const PLANTS = gql`
@@ -25,6 +26,10 @@ function Table() {
         soilPh
         bloomSeason
         daysToMaturity
+        users {
+          email
+          id
+        }
       }
     }
   `;

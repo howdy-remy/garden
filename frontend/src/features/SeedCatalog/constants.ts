@@ -25,6 +25,7 @@ export type TPlant = {
   spread: string;
   fruitSize: string;
   hardinessZones: number[];
+  users: { id: number; email: string }[];
 };
 
 export const columns = [

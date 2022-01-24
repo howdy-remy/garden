@@ -42,9 +42,9 @@ model Plant {
 model PlantToUser {
   id      Int   @id @default(autoincrement())
   plant   Plant @relation(fields: [plantId], references: [id])
-  plantId Int
+  plantId Int   @unique
   user    User  @relation(fields: [userId], references: [id])
-  userId  Int
+  userId  Int   @unique
 }
 
 enum Lifecycle {

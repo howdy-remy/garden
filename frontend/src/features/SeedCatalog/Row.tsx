@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useMutation, gql } from '@apollo/client';
+
 import { GilroySmallText, RecoletaLargeText } from '../../common/typography.styles';
 import {
   Container,
@@ -12,9 +14,38 @@ import {
 } from './Row.styles';
 import exposureToIcon from './SunExposureIcon';
 import { TPlant } from './constants';
+import cancel from './cancel.png';
+import add from './add.png';
 
 function Row({ plant, columns }: { plant: TPlant; columns: { key: string; display: string; leftPos?: number }[] }) {
-  const { name, id } = plant;
+  const user = localStorage.getItem('user');
+  const userEmail = JSON.parse(user).email;
+
+  const { name, id, users } = plant;
+
+  const initSelected = !!users.find((user) => user.email === userEmail);
+  const [isSelected, setIsSelected] = useState(initSelected);
+
+  const SELECT_PLANT = gql`
+    mutation AddPlantToUser($email: String!, $plantId: Int!) {
+      AddPlantToUser(email: $email, plantId: $plantId) {
+        plantId
+      }
+    }
+  `;
+
+  const [selectPlant] = useMutation(SELECT_PLANT, {
+    variables: {
+      plantId: id,
+      email: userEmail,
+    },
+  });
+
+  const handleOnClick = async () => {
+    await selectPlant();
+    setIsSelected(true);
+  };
+
   const makeReactKey = (col: string, key?: string) => `${name}_${id}_${col}_${key}`;
   const exposure = plant.sunExposure?.join('_');
 
@@ -41,7 +72,7 @@ function Row({ plant, columns }: { plant: TPlant; columns: { key: string; displa
   const getCell = (col) => {
     switch (col.key) {
       case 'src':
-        return <Image />;
+        return <Image src={isSelected ? cancel : add} />;
       case 'name':
         return <RecoletaLargeText>{plant.name}</RecoletaLargeText>;
       case 'sunExposure':
@@ -63,7 +94,7 @@ function Row({ plant, columns }: { plant: TPlant; columns: { key: string; displa
   };
 
   return (
-    <Container>
+    <Container onClick={handleOnClick}>
       {columns.map((column) => (
         <Cell leftPos={column.leftPos} key={makeReactKey(column.key, plant[column.key])}>
           {getCell(column)}

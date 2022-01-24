@@ -32,8 +32,6 @@ export const Cell = styled.div<{ key: string; leftPos?: number; children: ReactN
 export const Image = styled.img`
   height: 40px;
   width: 40px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.primary100};
 `;
 
 // PH --------------------------------------------------------------------------

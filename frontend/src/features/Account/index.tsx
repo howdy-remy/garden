@@ -24,11 +24,16 @@ function Timing() {
   const handleSubmit = async () => {
     await magic.auth.loginWithMagicLink({ email });
     const userMetaData = await magic.user.getMetadata();
-    debugger;
     await setIssuer(userMetaData.issuer);
-    const user = await login();
-    console.log(user);
+    const res = await login();
     debugger;
+    console.log(res.data.Login);
+    localStorage.setItem('user', JSON.stringify(res.data.Login));
+  };
+
+  const handleLogout = async () => {
+    await magic.user.logout();
+    console.log('logged out');
   };
 
   const handleOnChange = (e) => setEmail(e.target.value);
@@ -36,6 +41,7 @@ function Timing() {
     <div>
       <input type="email" name="email" placeholder="Enter your email" onChange={handleOnChange} />
       <button onClick={handleSubmit}>Send</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

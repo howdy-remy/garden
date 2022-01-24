@@ -1,9 +1,19 @@
-import { User } from "@prisma/client";
+import { Plant, PlantToUser, prisma, User } from "@prisma/client";
+import { Source } from "graphql";
 import { Resolvers } from "./generated/graphql";
 
 export const resolvers = {
   Query: {
-    AllPlants: async (source, args, context) => await context.prisma.plant.findMany(),
+    AllPlants: async (source, args, context) => await context.prisma.plant.findMany({
+      include: {
+        users: true
+      }
+    }),
+  },
+  Plant: {
+    users: async (source, args, { prisma }) => prisma.user.findMany({where: {
+      id: { in: source.users.map((obj) => obj.userId)}
+    }})
   },
   Mutation: {
     AddPlant: async (_, args, context) => {},
@@ -18,6 +28,25 @@ export const resolvers = {
         })
         return user;
 
+    },
+    AddPlantToUser: async(source, {plantId, email}, { prisma }) => {
+      const plantToUser = prisma.plantToUser.upsert({
+        where: {plantId: plantId },
+        update: {},
+        create: { 
+          plant: {
+            connect: {
+              id: plantId
+            }
+          },
+          user: {
+            connect: {
+              email: email
+            }
+          }
+        }
+      });
+      return plantToUser;
     }
   },
 }

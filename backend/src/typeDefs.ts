@@ -7,6 +7,7 @@ export const typeDefs = gql`
     password: String
     email:    String
     issuer:   String
+    plants: [Plant]
   }
 
   type Plant {
@@ -28,14 +29,15 @@ export const typeDefs = gql`
     spread:	        String
     fruitSize:	    String
     hardinessZones: [Int]
+    users: [User]
   }
 
   type PlantToUser {
     id:      Int!
     plant:   Plant
-    plantId: Int
+    plantId: Int!
     user:    User
-    userId:  Int
+    userId:  Int!
   }
 
   enum Lifecycle {
@@ -78,5 +80,6 @@ export const typeDefs = gql`
   type Mutation {
     AddPlant(body: String!): Plant!
     Login(email: String!, issuer: String!): User!
+    AddPlantToUser(plantId: Int!, email: String!): PlantToUser!
   }
 `

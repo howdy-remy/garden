@@ -8,7 +8,7 @@
   },
   "include": [
     "src/**/*.tsx?",
-    "**/*.d.ts"
+    "src/global.d.ts"
   ],
   "exclude": [
     "node_modules"
