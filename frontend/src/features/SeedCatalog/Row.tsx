@@ -33,6 +33,15 @@ function Row({ plant, columns }: { plant: TPlant; columns: { key: string; displa
       }
     }
   `;
+  const DESELECT_PLANT = gql`
+    mutation DeletePlantToUser($email: String!, $plantId: Int!) {
+      DeletePlantToUser(email: $email, plantId: $plantId) {
+        id
+        plantId
+        userId
+      }
+    }
+  `;
 
   const [selectPlant] = useMutation(SELECT_PLANT, {
     variables: {
@@ -40,10 +49,21 @@ function Row({ plant, columns }: { plant: TPlant; columns: { key: string; displa
       email: userEmail,
     },
   });
+  const [deselectPlant] = useMutation(DESELECT_PLANT, {
+    variables: {
+      plantId: id,
+      email: userEmail,
+    },
+  });
 
   const handleOnClick = async () => {
-    await selectPlant();
-    setIsSelected(true);
+    if (isSelected) {
+      await deselectPlant();
+      setIsSelected(false);
+    } else {
+      await selectPlant();
+      setIsSelected(true);
+    }
   };
 
   const makeReactKey = (col: string, key?: string) => `${name}_${id}_${col}_${key}`;

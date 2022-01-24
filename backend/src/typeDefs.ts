@@ -81,5 +81,6 @@ export const typeDefs = gql`
     AddPlant(body: String!): Plant!
     Login(email: String!, issuer: String!): User!
     AddPlantToUser(plantId: Int!, email: String!): PlantToUser!
+    DeletePlantToUser(plantId: Int!, email: String!): PlantToUser!
   }
 `

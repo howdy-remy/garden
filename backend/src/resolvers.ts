@@ -47,6 +47,11 @@ export const resolvers = {
         }
       });
       return plantToUser;
+    },
+    DeletePlantToUser: async(source, {plantId, email}, { prisma }) => {
+      const user = await prisma.user.findUnique({where: {email}});
+      const plantToUser = await prisma.plantToUser.findFirst({where: {userId: user.id, plantId }})
+      return await prisma.plantToUser.delete({where: { id: plantToUser.id }})
     }
   },
 }
