@@ -13,12 +13,12 @@ import {
   HarvestContainer,
 } from './Row.styles';
 import exposureToIcon from './SunExposureIcon';
-import { TPlant } from './constants';
+import { TColumn, IPlant } from './constants';
 import cancel from './cancel.png';
 import add from './add.png';
 
-function Row({ plant, columns }: { plant: TPlant; columns: { key: string; display: string; leftPos?: number }[] }) {
-  const user = localStorage.getItem('user');
+function Row({ plant, columns }: { plant: IPlant; columns: { key: string; display: string; leftPos?: number }[] }) {
+  const user = localStorage.getItem('user') || '';
   const userEmail = JSON.parse(user).email;
 
   const { name, id, users } = plant;
@@ -89,7 +89,7 @@ function Row({ plant, columns }: { plant: TPlant; columns: { key: string; displa
     </SeasonContainer>
   );
 
-  const getCell = (col) => {
+  const getCell = (col: TColumn) => {
     switch (col.key) {
       case 'src':
         return <Image src={isSelected ? cancel : add} />;

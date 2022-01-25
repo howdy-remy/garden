@@ -4,7 +4,7 @@ import sunShade from './sun_shade.png';
 import sunFullPartial from './sun_full-partial.png';
 import sunPartialShade from './sun_partial-shade.png';
 
-const exposureToIcon = {
+const exposureToIcon: { [key: string]: string } = {
   FULL: sunFull,
   PARTIAL: sunPartial,
   SHADE: sunShade,
@@ -12,4 +12,4 @@ const exposureToIcon = {
   PARTIAL_SHADE: sunPartialShade,
 };
 
-export default (exp) => exposureToIcon[exp];
+export default (exp: string) => exposureToIcon[exp];

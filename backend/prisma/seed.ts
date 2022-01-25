@@ -1,21 +1,22 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Type } from '@prisma/client'
 import seedData from './seedData';
 
 const prisma = new PrismaClient()
 
 const data = seedData.map(obj => ({
-  type: [],
-  lifeCycle: [],
+  type: [Type.VEGETABLE],
+  lifecycle: [],
   soilPh: [],
   bloomSeason: [],
   hardinessZones: [],
-  users: [],
   sunExposure: [],
   ...obj, 
-}))
-async function main() {
-  prisma.plant.createMany({ data });
-}
+}));
+
+console.log(data[0])
+const main = async () => {
+ await prisma.plant.createMany({ data: data });
+};
 
 main()
   .catch((e) => {

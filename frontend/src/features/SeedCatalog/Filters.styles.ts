@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components';
 
 export const FilterContainer = styled.div`
+  position: sticky;
+  left: 0;
+
   display: grid;
   grid-template-columns: 300px repeat(4, 100px);
   grid-auto-columns: 200px;
@@ -9,6 +12,7 @@ export const FilterContainer = styled.div`
 
   min-width: max-content;
   width: calc(100% - 60px);
+
   padding: 30px;
   background-color: ${({ theme }) => theme.accent400};
   border-radius: 8px;

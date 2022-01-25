@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import magic from '../../common/magic';
 
 function Timing() {
   const [email, setEmail] = useState<string>('');
-  const [issuer, setIssuer] = useState<string>('');
+  const [issuer, setIssuer] = useState<string | null>('');
 
   const LOGIN_USER = gql`
     mutation Login($email: String!, $issuer: String!) {
@@ -24,18 +24,24 @@ function Timing() {
   const handleSubmit = async () => {
     await magic.auth.loginWithMagicLink({ email });
     const userMetaData = await magic.user.getMetadata();
-    debugger;
     await setIssuer(userMetaData.issuer);
-    const user = await login();
-    console.log(user);
+    const res = await login();
     debugger;
+    console.log(res.data.Login);
+    localStorage.setItem('user', JSON.stringify(res.data.Login));
   };
 
-  const handleOnChange = (e) => setEmail(e.target.value);
+  const handleLogout = async () => {
+    await magic.user.logout();
+    console.log('logged out');
+  };
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   return (
     <div>
       <input type="email" name="email" placeholder="Enter your email" onChange={handleOnChange} />
       <button onClick={handleSubmit}>Send</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

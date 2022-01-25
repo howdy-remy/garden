@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const BaseParagraph = styled.p`
   margin: 0;
@@ -22,11 +22,17 @@ export const RecoletaText = styled(BaseParagraph)`
   line-height: 1.2;
 `;
 
-export const GilroyHeader = styled(BaseParagraph)<{ withSpaceAfter?: boolean }>`
+export const GilroyHeader = styled(BaseParagraph)<{ withSpaceAfter?: boolean; withStickyLeft?: boolean }>`
   font-family: ${({ theme }) => theme.gilroyExtraBold};
   font-size: ${({ theme }) => theme.extraLarge};
   line-height: 1.4;
-  ${({ withSpaceAfter }) => withSpaceAfter && 'margin-bottom: 30px'}
+  ${({ withSpaceAfter }) => withSpaceAfter && 'margin-bottom: 30px;'};
+  ${({ withStickyLeft }) =>
+    withStickyLeft &&
+    css`
+      position: sticky;
+      left: 0;
+    `};
 `;
 
 export const GilroyLargeText = styled(BaseParagraph)`

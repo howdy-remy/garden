@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import magic from '../../common/magic';
 
 function Timing() {
   const [email, setEmail] = useState<string>('');
-  const [issuer, setIssuer] = useState<string>('');
+  const [issuer, setIssuer] = useState<string | null>('');
 
   const LOGIN_USER = gql`
     mutation Login($email: String!, $issuer: String!) {
@@ -36,7 +36,7 @@ function Timing() {
     console.log('logged out');
   };
 
-  const handleOnChange = (e) => setEmail(e.target.value);
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   return (
     <div>
       <input type="email" name="email" placeholder="Enter your email" onChange={handleOnChange} />

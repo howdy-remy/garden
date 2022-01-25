@@ -6,7 +6,8 @@ export enum PH {
   SLIGHTLY_ALKALINE = 'slightlyAlkaline',
 }
 
-export type TPlant = {
+export interface IPlant {
+  [key: string]: any;
   id: number;
   name: string;
   variety: string;
@@ -26,8 +27,9 @@ export type TPlant = {
   fruitSize: string;
   hardinessZones: number[];
   users: { id: number; email: string }[];
-};
+}
 
+export type TColumn = { key: string; display: string; leftPos?: number };
 export const columns = [
   { key: 'src', display: 'Name', leftPos: 0 },
   { key: 'name', display: '', leftPos: 70 },

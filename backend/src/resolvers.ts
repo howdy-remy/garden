@@ -4,12 +4,21 @@ import { Resolvers } from "./generated/graphql";
 
 export const resolvers = {
   Query: {
-    AllPlants: async (source, args, context) => await context.prisma.plant.findMany({
+    AllPlants: async (source, {input}, context) => {
+      console.log(input?.name)
+      return await context.prisma.plant.findMany({
+      where: {
+        name: { contains: input?.name },
+        ...(input?.type && {type: {
+          has: input?.type
+        }})
+      },
       include: {
         users: true
       }
-    }),
-  },
+    })
+  }
+},
   Plant: {
     users: async (source, args, { prisma }) => prisma.user.findMany({where: {
       id: { in: source.users.map((obj) => obj.userId)}
@@ -30,22 +39,24 @@ export const resolvers = {
 
     },
     AddPlantToUser: async(source, {plantId, email}, { prisma }) => {
-      const plantToUser = prisma.plantToUser.upsert({
-        where: {plantId: plantId },
-        update: {},
-        create: { 
-          plant: {
-            connect: {
-              id: plantId
-            }
-          },
-          user: {
-            connect: {
-              email: email
+      const user = await prisma.user.findUnique({where: {email}});
+      let plantToUser = await prisma.plantToUser.findFirst({where: {userId: user.id, plantId }})
+      if(!plantToUser){
+        plantToUser = prisma.plantToUser.create({
+          data: { 
+            plant: {
+              connect: {
+                id: plantId
+              }
+            },
+            user: {
+              connect: {
+                email: email
+              }
             }
           }
-        }
-      });
+        });
+      }
       return plantToUser;
     },
     DeletePlantToUser: async(source, {plantId, email}, { prisma }) => {

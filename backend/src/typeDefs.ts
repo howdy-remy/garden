@@ -73,8 +73,15 @@ export const typeDefs = gql`
     PERENNIAL
   }
 
+  input PlantInputFilter {
+    name: String
+    type: Type
+    sunExposure: SunExposure
+    season: Season
+  }
+
   type Query {
-    AllPlants: [Plant!]!
+    AllPlants(input: PlantInputFilter): [Plant!]!
   }
 
   type Mutation {
