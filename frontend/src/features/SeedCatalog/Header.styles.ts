@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { ReactNode } from 'react';
-import { grid } from './constants';
+import { grid } from './utils/constants';
 
 export const Container = styled.div`
   ${grid}

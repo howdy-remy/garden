@@ -9,15 +9,13 @@ export const SeedsContainer = styled.div`
 `;
 
 export const Packets = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 30px;
   margin-top: 30px;
 `;
 
 export const SeedPacket = styled.div`
   width: 100%;
-  height: 200px;
+  height: 60px;
   background-color: white;
   border-radius: 8px;
+  margin-bottom: 15px;
 `;

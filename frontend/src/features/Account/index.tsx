@@ -24,16 +24,14 @@ function Timing() {
   const handleSubmit = async () => {
     await magic.auth.loginWithMagicLink({ email });
     const userMetaData = await magic.user.getMetadata();
-    await setIssuer(userMetaData.issuer);
+    setIssuer(userMetaData.issuer);
     const res = await login();
-    debugger;
-    console.log(res.data.Login);
     localStorage.setItem('user', JSON.stringify(res.data.Login));
   };
 
   const handleLogout = async () => {
     await magic.user.logout();
-    console.log('logged out');
+    localStorage.setItem('user', '');
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);

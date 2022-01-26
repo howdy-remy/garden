@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 
 import { GilroySmallText, RecoletaLargeText } from '../../common/typography.styles';
+import { IPlant } from '../../apiTypes/Plant';
+
 import {
   Container,
   Image,
@@ -12,10 +14,10 @@ import {
   SeasonContainer,
   HarvestContainer,
 } from './Row.styles';
-import exposureToIcon from './SunExposureIcon';
-import { TColumn, IPlant } from './constants';
-import cancel from './cancel.png';
-import add from './add.png';
+import exposureToIcon from './utils/SunExposureIcon';
+import { TColumn } from './utils/constants';
+import cancel from './assets/cancel.png';
+import add from './assets/add.png';
 
 function Row({ plant, columns }: { plant: IPlant; columns: { key: string; display: string; leftPos?: number }[] }) {
   const user = localStorage.getItem('user') || '';

@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { ReactNode } from 'react';
-import { grid, PH } from './constants';
+import { grid } from './utils/constants';
+import { PH } from '../../apiTypes/Plant';
 
 export const Container = styled.div`
   ${grid}

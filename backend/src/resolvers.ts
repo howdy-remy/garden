@@ -7,25 +7,35 @@ export const resolvers = {
     AllPlants: async (source, {input}, context) => {
       console.log(input?.name)
       return await context.prisma.plant.findMany({
-      where: {
-        name: { contains: input?.name },
-        ...(input?.type && {type: {
-          has: input?.type
-        }})
-      },
-      include: {
-        users: true
-      }
-    })
-  }
+        orderBy: [{ name: 'asc', }],
+        where: {
+          name: { contains: input?.name },
+          ...(input?.type && {type: {
+            has: input?.type
+          }})
+        },
+        include: {
+          users: true
+        }
+      })
+    },
+    PlantsForUser:async (source, {email}, {prisma}) => {
+      const user = await prisma.user.findUnique({where: {email}});
+      return await prisma.plant.findMany({
+        where: {
+          users: {
+            some: {userId: user.id }
+          }    
+        }
+      });
+    }
 },
   Plant: {
     users: async (source, args, { prisma }) => prisma.user.findMany({where: {
-      id: { in: source.users.map((obj) => obj.userId)}
+      id: { in: source.users?.map((obj) => obj.userId)}
     }})
   },
   Mutation: {
-    AddPlant: async (_, args, context) => {},
     Login: async (source, {email, issuer}, { prisma }) => {
         const user: User = prisma.user.upsert({
           where: {email: email},

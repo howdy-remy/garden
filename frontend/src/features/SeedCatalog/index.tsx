@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 import { GilroyHeader } from '../../common/typography.styles';
 
-import { columns, IPlant } from './constants';
+import { columns } from './utils/constants';
+import { IPlant } from '../../apiTypes/Plant';
 import { TableContainer } from './index.styles';
 import Row from './Row';
 import Header from './Header';
 import Filters, { TFilters } from './Filters';
-import magic from '../../common/magic';
-import { useState } from 'react';
 
 function Table() {
   const [filters, setFilters] = useState<TFilters>({

@@ -13,7 +13,6 @@ const data = seedData.map(obj => ({
   ...obj, 
 }));
 
-console.log(data[0])
 const main = async () => {
  await prisma.plant.createMany({ data: data });
 };

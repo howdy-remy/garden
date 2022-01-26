@@ -82,10 +82,10 @@ export const typeDefs = gql`
 
   type Query {
     AllPlants(input: PlantInputFilter): [Plant!]!
+    PlantsForUser(email: String!): [Plant!]!
   }
 
   type Mutation {
-    AddPlant(body: String!): Plant!
     Login(email: String!, issuer: String!): User!
     AddPlantToUser(plantId: Int!, email: String!): PlantToUser!
     DeletePlantToUser(plantId: Int!, email: String!): PlantToUser!
