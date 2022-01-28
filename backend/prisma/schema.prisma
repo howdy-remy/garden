@@ -18,25 +18,33 @@ model User {
 }
 
 model Plant {
-  id             Int           @id @default(autoincrement())
-  name           String
-  variety        String?
-  scientificName String?
-  type           Type[]
-  lifecycle      Lifecycle[]
-  sunExposure    SunExposure[]
-  soilPh         SoilPh[]
-  bloomSeason    Season[]
-  daysToMaturity String?
-  yield          String?
-  sowMethod      String?
-  plantingNotes  String?
-  spacing        String?
-  height         String?
-  spread         String?
-  fruitSize      String?
-  hardinessZones Int[]
-  users          PlantToUser[]
+  id               Int         @id @default(autoincrement())
+  name             String
+  variety          String?
+  scientific_name  String?
+  season           Season[]
+  family           String
+  description      String
+  sunlight         Sunlight[]
+  soil             String?
+  soil_description String?
+  ph_low           Float?
+  ph_high          Float?
+  lifecycle        Lifecycle[]
+  ease             Ease?
+  height           String?
+  spread           String?
+  bloom_time       BloomTime[]
+  shape            Shape[]
+  propagate        Propagate[]
+  germination_low  Int?
+  germination_high Int?
+  emergence_low    Int?
+  emergence_high   Int?
+  years            Int?
+  care             String
+
+  users PlantToUser[]
 }
 
 model PlantToUser {
@@ -47,26 +55,52 @@ model PlantToUser {
   userId  Int
 }
 
+enum BloomTime {
+  EARLY_SPRING
+  MID_SPRING
+  LATE_SPRING
+  EARLY_SUMMER
+  MID_SUMMER
+  LATE_SUMMER
+  EARLY_FALL
+  MID_FALL
+  LATE_FALL
+}
+
+enum Ease {
+  EASY
+  MODERATE
+  DIFFICULT
+}
+
 enum Lifecycle {
   ANNUAL
   PERENNIAL
-  BIANNUAL
+}
+
+enum Propagate {
+  SEED
+  DIVISION
+  SEPARATION
+  CUTTINGS
 }
 
 enum Season {
-  WINTER
-  SPRING
-  SUMMER
-  FALL
+  COOL
+  WARM
 }
 
-enum SoilPh {
-  SLIGHTLY_ALKALINE
-  SLIGHTLY_ACIDIC
-  NEUTRAL
+enum Shape {
+  CUSHION
+  SPREADING
+  UPRIGHT
+  CLIMBING
+  TRAILING
+  GRASS
+  FAN
 }
 
-enum SunExposure {
+enum Sunlight {
   FULL
   PARTIAL
   SHADE

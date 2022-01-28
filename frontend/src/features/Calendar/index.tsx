@@ -1,49 +1,91 @@
-import React, { useState, ChangeEvent } from 'react';
-import { useMutation, gql } from '@apollo/client';
-import magic from '../../common/magic';
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
 
-function Timing() {
-  const [email, setEmail] = useState<string>('');
-  const [issuer, setIssuer] = useState<string | null>('');
+import { GilroyHeader, GilroySmallText } from '../../common/typography.styles';
+import { Cell, ContentContainer, Row } from './index.styles';
+import { IPlant } from '../../apiTypes/Plant';
 
-  const LOGIN_USER = gql`
-    mutation Login($email: String!, $issuer: String!) {
-      Login(email: $email, issuer: $issuer) {
-        email
-        issuer
+function Calendar() {
+  const PLANTS_FOR_USER = gql`
+    query PlantsForUser($email: String!) {
+      PlantsForUser(email: $email) {
+        id
+        name
+        variety
+        type
+        sowMethod
+        spacing
+        height
+        spread
+        sunExposure
+        soilPh
+        bloomSeason
+        daysToMaturity
+        users {
+          email
+          id
+        }
       }
     }
   `;
 
-  const [login] = useMutation(LOGIN_USER, {
+  const user = localStorage.getItem('user') || '';
+  const userEmail = JSON.parse(user).email;
+
+  const { data, refetch } = useQuery(PLANTS_FOR_USER, {
     variables: {
-      email,
-      issuer,
+      email: userEmail,
     },
   });
-  const handleSubmit = async () => {
-    await magic.auth.loginWithMagicLink({ email });
-    const userMetaData = await magic.user.getMetadata();
-    await setIssuer(userMetaData.issuer);
-    const res = await login();
-    debugger;
-    console.log(res.data.Login);
-    localStorage.setItem('user', JSON.stringify(res.data.Login));
-  };
-
-  const handleLogout = async () => {
-    await magic.user.logout();
-    console.log('logged out');
-  };
-
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   return (
-    <div>
-      <input type="email" name="email" placeholder="Enter your email" onChange={handleOnChange} />
-      <button onClick={handleSubmit}>Send</button>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+      <ContentContainer>
+        <GilroyHeader withSpaceAfter>Calendar</GilroyHeader>
+        <Row>
+          <Cell>
+            <GilroySmallText>Plants</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Jan</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Feb</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Mar</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Apr</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>May</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Jun</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Jul</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Aug</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Sep</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Oct</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Nov</GilroySmallText>
+          </Cell>
+          <Cell>
+            <GilroySmallText>Dec</GilroySmallText>
+          </Cell>
+        </Row>
+        {data && data.PlantsForUser.map((plant: IPlant) => <Row key={plant.id}>{plant.name}</Row>)}
+      </ContentContainer>
+    </>
   );
 }
 
-export default Timing;
+export default Calendar;
