@@ -4,13 +4,19 @@ import magic from '../../common/magic';
 
 function Timing() {
   const [email, setEmail] = useState<string>('');
+  const [zip, setZip] = useState<string>('');
+
   const [issuer, setIssuer] = useState<string | null>('');
 
   const LOGIN_USER = gql`
-    mutation Login($email: String!, $issuer: String!) {
-      Login(email: $email, issuer: $issuer) {
+    mutation Login($email: String!, $issuer: String!, $zip: String) {
+      Login(email: $email, issuer: $issuer, zip: $zip) {
         email
         issuer
+        zipData {
+          zip
+          stcountyfp
+        }
       }
     }
   `;
@@ -19,6 +25,7 @@ function Timing() {
     variables: {
       email,
       issuer,
+      zip,
     },
   });
   const handleSubmit = async () => {
@@ -34,10 +41,12 @@ function Timing() {
     localStorage.setItem('user', '');
   };
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>, fn: (value: string) => void) => fn(e.target.value);
   return (
     <div>
-      <input type="email" name="email" placeholder="Enter your email" onChange={handleOnChange} />
+      <input type="email" name="email" placeholder="Enter your email" onChange={(e) => handleOnChange(e, setEmail)} />
+      <input type="zip" name="zip" placeholder="Enter your zip" onChange={(e) => handleOnChange(e, setZip)} />
+
       <button onClick={handleSubmit}>Send</button>
       <button onClick={handleLogout}>Logout</button>
     </div>

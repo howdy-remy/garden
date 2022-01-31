@@ -13,15 +13,8 @@ function GardenBeds() {
         id
         name
         variety
-        type
-        sowMethod
-        spacing
         height
         spread
-        sunExposure
-        soilPh
-        bloomSeason
-        daysToMaturity
         users {
           email
           id

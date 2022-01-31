@@ -21,15 +21,14 @@ function Table() {
         id
         name
         variety
-        type
-        sowMethod
-        spacing
+        ease
+        sunlight
+        ph_low
+        ph_high
+        season
+        shape
         height
         spread
-        sunExposure
-        soilPh
-        bloomSeason
-        daysToMaturity
         users {
           email
           id

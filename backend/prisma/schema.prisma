@@ -11,10 +11,25 @@ datasource db {
 }
 
 model User {
-  id     Int           @id @default(autoincrement())
-  email  String        @unique
-  issuer String        @unique
-  plants PlantToUser[]
+  id      Int     @id @default(autoincrement())
+  email   String  @unique
+  issuer  String  @unique
+  zipData ZipData @relation(fields: [zipDataId], references: [id])
+
+  plants    PlantToUser[]
+  zipDataId Int
+}
+
+model ZipData {
+  id Int @id @default(autoincrement())
+
+  zip        String
+  stcountyfp String
+  city       String
+  state      String
+  countyname String
+  classfp    String
+  User       User[]
 }
 
 model Plant {
@@ -104,12 +119,4 @@ enum Sunlight {
   FULL
   PARTIAL
   SHADE
-}
-
-enum Type {
-  VEGETABLE
-  FRUIT
-  HERBS
-  ANNUAL
-  PERENNIAL
 }

@@ -10,13 +10,15 @@ export const FilterContainer = styled.div`
   grid-column-gap: 16px;
   align-items: flex-end;
 
-  min-width: max-content;
-  width: calc(100% - 60px);
+  width: max-content;
+  max-width: calc(100% - 30px);
 
-  padding: 30px;
+  padding: 15px;
   background-color: ${({ theme }) => theme.accent400};
   border-radius: 8px;
   margin-bottom: 30px;
+
+  overflow: auto;
 
   & > div > label {
     margin-bottom: 4px;

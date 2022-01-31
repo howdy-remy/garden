@@ -23,7 +23,7 @@ export const ContentContainer = styled.div`
   padding: 40px;
 
   background-color: ${({ theme }) => theme.white};
-  border-radius: 30px;
+  border-radius: 30px 0 0 30px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 
   overflow: auto;

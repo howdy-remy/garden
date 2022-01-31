@@ -28,6 +28,15 @@ export const resolvers = {
           }    
         }
       });
+    },
+    User: async ( source, { email }, { prisma }) => {
+      return await prisma.user.findUnique({
+        where: {email},
+        include: {
+          zipData: true
+        }
+      });
+
     }
 },
   Plant: {
@@ -36,12 +45,25 @@ export const resolvers = {
     }})
   },
   Mutation: {
-    Login: async (source, {email, issuer}, { prisma }) => {
+    Login: async (source, {email, issuer, zip}, { prisma }) => {
+        const zipData = await prisma.zipData.findFirst({where: {zip}});
+
         const user: User = prisma.user.upsert({
           where: {email: email},
-          update: {issuer: issuer},
+          update: {issuer: issuer,
+          zipData: {
+            connect: {
+              id: zipData.id
+            }
+          }
+          },
           create: {
-            email: email, issuer: issuer
+            email, issuer,
+            zipData: {
+              connect: {
+                id: zipData.id
+              }
+            }
           }
 
         })

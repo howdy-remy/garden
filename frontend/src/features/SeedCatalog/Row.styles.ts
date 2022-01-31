@@ -16,8 +16,8 @@ export const Cell = styled.div<{ key: string; leftPos?: number; children: ReactN
   display: grid;
   align-items: center;
   background-color: ${({ theme }) => theme.white};
-  height: calc(100% - 30px);
-  padding: 10px 15px;
+  height: calc(100% - 16px);
+  padding: 8px 15px;
 
   ${({ leftPos }) => {
     return (
