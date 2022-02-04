@@ -5,7 +5,9 @@ import { GilroyHeader, GilroySmallText } from '../../common/typography.styles';
 import { Cell, ContentContainer, Row } from './index.styles';
 import { IPlant } from '../../apiTypes/Plant';
 import { useEffect } from 'react';
-import useWeather from './useWeather';
+import useFetchWeather from './useFetchWeather';
+import getTemperatureStatsByMonth from './getTemperatureStatsByMonth';
+import { TTempsByMonth } from './types';
 
 interface IWeather {
   attributes: string;
@@ -19,17 +21,24 @@ function Calendar() {
   // eslint-disable-next-line
   // @ts-ignore
   const [weather, setWeather] = useState<IWeather[]>([]);
+  const [temperatureStatsByMonth, setTemperatureStatsByMonth] = useState<TTempsByMonth>([]);
   const user = localStorage.getItem('user') || '';
   const userEmail = JSON.parse(user).email;
 
-  const { loadingUser, fetchWeather } = useWeather();
+  const { loadingUser, fetchWeather } = useFetchWeather();
 
   useEffect(() => {
-    if (weather?.length || loadingUser) return;
+    if (loadingUser) return;
     const getWeatherData = async () => {
-      const weather = await fetchWeather();
+      const response = await fetch(`https://www.ncdc.noaa.gov/cdo-web/api/v2/datatypes?datasetid=GSOM&limit=100`, {
+        headers: new Headers({
+          Token: 'kLWqzArygBVySsSGaRtxJFQOEsPNMMQm',
+        }),
+      });
       debugger;
+      const weather = await fetchWeather();
       setWeather(weather.results);
+      setTemperatureStatsByMonth(getTemperatureStatsByMonth(weather.results));
     };
     getWeatherData();
   }, [loadingUser]);
@@ -59,13 +68,13 @@ function Calendar() {
     <>
       <ContentContainer>
         <GilroyHeader withSpaceAfter>Calendar</GilroyHeader>
-        {weather && (
-          <>
-            {weather.map(({ value, date, station }: IWeather) => (
-              <p key={`${date}-${station}`}>{value}</p>
-            ))}
-          </>
-        )}
+        {weather &&
+          temperatureStatsByMonth.map((month, i) => (
+            <p key={i}>
+              {i}, {month.EMXT.average}
+            </p>
+          ))}
+
         <Row>
           <Cell>
             <GilroySmallText>Plants</GilroySmallText>
