@@ -17,9 +17,9 @@ export default (data: TData[]) => {
   });
 
   temperatureStatsByMonth.map((month) => {
-    month.TAVG.average = average(month.TMIN.data);
+    month.TAVG.average = average(month.TAVG.data);
     month.TMAX.average = Math.max(...month.TMAX.data);
-    month.TMIN.average = Math.min(...month.TAVG.data);
+    month.TMIN.average = Math.min(...month.TMIN.data);
     month.EMNT.average = Math.min(...month.EMNT.data);
     month.EMXT.average = Math.max(...month.EMXT.data);
   });

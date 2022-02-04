@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 import { GilroyHeader, GilroySmallText } from '../../common/typography.styles';
 import { Cell, ContentContainer, Row } from './index.styles';
 import { IPlant } from '../../apiTypes/Plant';
-import { useEffect } from 'react';
 import useFetchWeather from './useFetchWeather';
 import getTemperatureStatsByMonth from './getTemperatureStatsByMonth';
 import { TTempsByMonth } from './types';
+import Chart from './Chart';
 
 interface IWeather {
   attributes: string;
@@ -68,12 +68,8 @@ function Calendar() {
     <>
       <ContentContainer>
         <GilroyHeader withSpaceAfter>Calendar</GilroyHeader>
-        {weather &&
-          temperatureStatsByMonth.map((month, i) => (
-            <p key={i}>
-              {i}, {month.EMXT.average}
-            </p>
-          ))}
+
+        <Chart temperatureStatsByMonth={temperatureStatsByMonth} />
 
         <Row>
           <Cell>
