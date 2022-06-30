@@ -1,6 +1,7 @@
 import React from 'react';
 import { TTempsByMonth } from './types';
-import { Axis, Grid, LineSeries, XYChart, Tooltip } from '@visx/xychart';
+import { Axis, Grid, AreaSeries, AreaStack, XYChart, Tooltip, buildChartTheme } from '@visx/xychart';
+import theme from '../../common/theme';
 
 const Chart = ({ temperatureStatsByMonth }: { temperatureStatsByMonth: TTempsByMonth }) => {
   const accessors = {
@@ -21,16 +22,24 @@ const Chart = ({ temperatureStatsByMonth }: { temperatureStatsByMonth: TTempsByM
   const chartDataTMIN = convertToChartData('TMIN');
   const chartDataEMNT = convertToChartData('EMNT');
 
+  const chartTheme = buildChartTheme({
+    backgroundColor: theme.primary100,
+    colors: [theme.accent400, theme.accent700, theme.accent800, theme.primary100],
+    gridColor: theme.primary300,
+    gridColorDark: theme.primary300,
+    tickLength: 10,
+  });
+
   return (
-    <XYChart height={300} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
-      <Axis orientation="bottom" />
-      <Axis orientation="left" />
-      <Grid columns={false} numTicks={4} />
-      <LineSeries dataKey="EMXT" data={chartDataEMXT} {...accessors} />
-      <LineSeries dataKey="TMAX" data={chartDataTMAX} {...accessors} />
-      <LineSeries dataKey="TAVG" data={chartDataTAVG} {...accessors} />
-      <LineSeries dataKey="TMIN" data={chartDataTMIN} {...accessors} />
-      <LineSeries dataKey="EMNT" data={chartDataEMNT} {...accessors} />
+    <XYChart height={200} xScale={{ type: 'band' }} yScale={{ type: 'linear' }} theme={chartTheme}>
+      <Axis orientation="bottom" label="months" />
+      <Axis orientation="left" label="Temperature (Fº)" />
+      <Grid columns={false} numTicks={5} />
+
+      <AreaSeries dataKey="EMXT" data={chartDataEMXT} {...accessors} opacity={0.4} />
+      <AreaSeries dataKey="TMAX" data={chartDataTMAX} {...accessors} opacity={0.4} />
+      <AreaSeries dataKey="TMIN" data={chartDataTMIN} {...accessors} opacity={0.4} />
+      <AreaSeries dataKey="EMNT" data={chartDataEMNT} {...accessors} />
 
       <Tooltip
         snapTooltipToDatumX
