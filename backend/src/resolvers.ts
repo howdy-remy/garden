@@ -5,13 +5,16 @@ import { Resolvers } from "./generated/graphql";
 export const resolvers = {
   Query: {
     AllPlants: async (source, {input}, context) => {
-      console.log(input?.name)
       return await context.prisma.plant.findMany({
         orderBy: [{ name: 'asc', }],
         where: {
-          name: { contains: input?.name },
-          ...(input?.type && {type: {
-            has: input?.type
+          name: { contains: input?.name, mode: 'insensitive' },
+          ...(input?.ease && {ease: input?.ease}),
+           ...(input?.sunlight && {sunlight: {
+            has: input?.sunlight
+          }}),
+           ...(input?.season && {season: {
+            has: input?.season
           }})
         },
         include: {

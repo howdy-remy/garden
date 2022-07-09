@@ -34,36 +34,36 @@ function Filters({
         <TextInput type="text" id="name" onChange={handleOnNameChange} />
       </div>
       <div>
-        <GilroySmallText as="label" htmlFor="type">
-          Type
+        <GilroySmallText as="label" htmlFor="ease">
+          Ease
         </GilroySmallText>
-        <SelectInput id="type" onChange={(e) => handleOnSelectChange(e, 'type')}>
+        <SelectInput id="ease" onChange={(e) => handleOnSelectChange(e, 'ease')}>
           <option value={''}> </option>
-          <option>VEGETABLE</option>
-          <option>FRUIT</option>
-          <option>HERBS</option>
-          <option>ANNUAL</option>
-          <option>PERENNIAL</option>
+          <option>EASY</option>
+          <option>MODERATE</option>
+          <option>DIFFICULT</option>
         </SelectInput>
       </div>
       <div>
-        <GilroySmallText as="label" htmlFor="sun">
+        <GilroySmallText as="label" htmlFor="sunlight">
           Sun Exposure
         </GilroySmallText>
-        <SelectInput id="sun">
-          <option>option 1</option>
-          <option>option 2</option>
-          <option>option 3</option>
+        <SelectInput id="sunlight" onChange={(e) => handleOnSelectChange(e, 'sunlight')}>
+          <option value={''}> </option>
+
+          <option>FULL</option>
+          <option>PARTIAL</option>
+          <option>SHADE</option>
         </SelectInput>
       </div>
       <div>
         <GilroySmallText as="label" htmlFor="season">
           Season
         </GilroySmallText>
-        <SelectInput id="season">
-          <option>option 1</option>
-          <option>option 2</option>
-          <option>option 3</option>
+        <SelectInput id="season" onChange={(e) => handleOnSelectChange(e, 'season')}>
+          <option value={''}> </option>
+          <option>COOL</option>
+          <option>WARM</option>
         </SelectInput>
       </div>
       <Button onClick={filterAction}>filter</Button>
