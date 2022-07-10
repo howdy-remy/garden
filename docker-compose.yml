@@ -1,0 +1,49 @@
+version: '1'
+services:
+  postgres:
+    image: postgres:13-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: plantry
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  api:
+    image: plantry_api
+    depends_on:
+      - postgres
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/api
+    ports:
+      - '4000:4000'
+    environment:
+      PRISMA_CONFIG: |
+        port: 4000
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: postgres
+            password: postgres
+
+  app:
+    container_name: plantry_app
+    image: plantry_app
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/src:/app/src
+    ports:
+      - 3000:3000
+
+volumes:
+  postgres:
