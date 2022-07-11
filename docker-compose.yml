@@ -13,7 +13,7 @@ services:
       - postgres:/var/lib/postgresql/data
 
   api:
-    image: plantry_api
+    image: kimbernoly/plantry_api:latest
     depends_on:
       - postgres
     build: 
@@ -36,7 +36,7 @@ services:
 
   app:
     container_name: plantry_app
-    image: plantry_app
+    image: kimbernoly/plantry_app:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
